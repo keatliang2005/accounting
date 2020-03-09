@@ -31,16 +31,6 @@ class JournalTransaction extends Model
     protected $currency = 'USD';
 
     /**
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
-     * @var array
-     */
-    protected $guarded = ['id'];
-
-    /**
      * @var array
      */
     protected $casts
@@ -60,6 +50,7 @@ class JournalTransaction extends Model
         static::deleted(function ($transaction) {
             $transaction->journal->resetCurrentBalances();
         });
+
     }
 
     /**
