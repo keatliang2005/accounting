@@ -12,7 +12,7 @@ class CreateAccountingLedgersTable extends Migration
      */
     public function up()
     {
-        Schema::create('accounting_ledgers', function (Blueprint $table) {
+        Schema::create('ledgers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->enum('type', ['asset', 'liability', 'equity', 'income', 'expense']);
