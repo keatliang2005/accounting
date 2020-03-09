@@ -23,7 +23,7 @@ class JournalTransaction extends Model
     /**
      * @var string
      */
-    protected $table = 'accounting_journal_transactions';
+    protected $table = 'journal_transactions';
 
     /**
      * @var string

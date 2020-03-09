@@ -22,7 +22,7 @@ class Ledger extends Model
 	/**
 	 * @var string
 	 */
-	protected $table = 'accounting_ledgers';
+	protected $table = 'ledgers';
 	
 	public $currency = 'USD';
 	

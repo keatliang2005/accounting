@@ -22,7 +22,7 @@ class Journal extends Model
 	/**
 	 * @var string
 	 */
-	protected $table = 'accounting_journals';
+	protected $table = 'journals';
 	
     /**
      * Get all of the morphed models.
