@@ -3,16 +3,20 @@
 namespace Scottlaurent\Accounting\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Money\Currencies\ISOCurrencies;
+use Money\Currency;
+use Money\Formatter\IntlMoneyFormatter;
+use Money\Money;
 
 /**
  * Class Ledger
  *
  * @package Scottlaurent\Accounting
- * @property    int            $journal_id
- * @property    int            $debit
- * @property    int            $credit
- * @property    string         $currency
- * @property    string         memo
+ * @property    int $journal_id
+ * @property    int $debit
+ * @property    int $credit
+ * @property    string $currency
+ * @property    string memo
  * @property    \Carbon\Carbon $post_date
  * @property    \Carbon\Carbon $updated_at
  * @property    \Carbon\Carbon $created_at
@@ -29,6 +33,24 @@ class JournalTransaction extends Model
      * @var string
      */
     protected $currency = 'USD';
+
+    protected $appends = ['debit_ISO', 'credit_ISO'];
+
+    /**
+     * @var IntlMoneyFormatter|null
+     */
+    protected $moneyFormatter;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $currencies = new ISOCurrencies();
+        $numberFormatter = new \NumberFormatter('en_US',
+            \NumberFormatter::CURRENCY);
+        $this->moneyFormatter = new IntlMoneyFormatter($numberFormatter,
+            $currencies);
+    }
 
     /**
      * @var array
@@ -50,7 +72,22 @@ class JournalTransaction extends Model
         static::deleted(function ($transaction) {
             $transaction->journal->resetCurrentBalances();
         });
+    }
 
+    public function getdebitISOAttribute($value)
+    {
+        if($this->debit){
+            $money = new Money($this->debit, new Currency($this->getAttribute('currency')));
+            return $this->moneyFormatter->format($money);
+        }
+    }
+
+    public function getCreditISOAttribute($value)
+    {
+        if($this->credit){
+            $money = new Money($this->credit, new Currency($this->getAttribute('currency')));
+            return $this->moneyFormatter->format($money);
+        }
     }
 
     /**
@@ -61,10 +98,10 @@ class JournalTransaction extends Model
         return $this->belongsTo(Journal::class);
     }
 
-
     /**
      * Set Reference of the transaction
-     * @param Model $object
+     *
+     * @param  Model  $object
      *
      * @return JournalTransaction
      */
@@ -98,7 +135,7 @@ class JournalTransaction extends Model
     }
 
     /**
-     * @param string $currency
+     * @param  string  $currency
      */
     public function setCurrency($currency)
     {

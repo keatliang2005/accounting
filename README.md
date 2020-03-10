@@ -12,6 +12,13 @@ I am an accountant and a Laravel developer.  I wrote this package to provide a s
 
 ** This DOES NOT replace any type of financial recording system which you may be using (ie if you are tracking things in Stripe for example).
 
+##Keat Liang's MOD
+
+Additional feature or mods for myown needs, you may use as you like.
+- Journal Transaction reference object now have morph to 'reference'
+- ISO version fields of credit/debit appended on Journal Transaction Model
+- ISO version fields of balance appended on Journal Model
+- Remove prefix of "Accounting" in migration table, to suite Laravel naming convention
 
 ## Contents
 
@@ -33,6 +40,13 @@ I am an accountant and a Laravel developer.  I wrote this package to provide a s
 4) ** most of the time you will want to add the $model->initJournal() into the static::created() method of your model so that a journal is created when you create the model object itself.
 
 5) If using double entry, add Scottlaurent\Accounting\Services\Accounting::class to your service providers
+
+Keat Liang's additions
+6) Added support for publish migration, no more copy and paste
+
+```bash
+php artisan vendor:publish --provider="Scottlaurent\Accounting\AccountingServiceProvider"
+```
 
 
 ## <a name="code-sample"></a>Code Sample
