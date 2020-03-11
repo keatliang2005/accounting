@@ -27,7 +27,7 @@ class Journal extends Model
      */
     protected $table = 'journals';
 
-    protected $appends = ['balance_ISO'];
+    protected $appends = ['balance_ISO', 'balance_decimal'];
 
     /**
      * @var IntlMoneyFormatter
@@ -41,6 +41,11 @@ class Journal extends Model
         $currencies = new ISOCurrencies();
         $numberFormatter = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
         $this->moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
+    }
+
+    public function getBalanceDecimalAttribute($value)
+    {
+        return $this->getOriginal('balance')/100;
     }
 
     public function getBalanceISOAttribute($value)
