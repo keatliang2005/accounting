@@ -45,12 +45,12 @@ class Journal extends Model
 
     public function getBalanceDecimalAttribute($value)
     {
-        return $this->getOriginal('balance')/100;
+        return $this->getRawOriginal('balance')/100;
     }
 
     public function getBalanceISOAttribute($value)
     {
-        $money = new Money($this->getOriginal('balance'), new Currency($this->currency));
+        $money = new Money($this->getRawOriginal('balance'), new Currency($this->currency));
 
         return $this->moneyFormatter->format($money);
     }
