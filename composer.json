@@ -11,14 +11,13 @@
     ],
     "require": {
         "moneyphp/money": "^3.0",
-        "ramsey/uuid": "^3.7",
+        "ramsey/uuid": "^3.7|^4.0",
         "ext-intl": "*"
     },
     "require-dev": {
-        "mockery/mockery": "^0.9.5",
-        "orchestra/testbench": "~3.4.0",
-        "orchestra/database": "~3.4.0",
-        "phpunit/phpunit": "^5.2"
+        "mockery/mockery": "^1.3",
+        "orchestra/testbench": "~3.4.0|^5.2",
+        "phpunit/phpunit": "^5.2|^9"
     },
     "extra": {
         "laravel": {
